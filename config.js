@@ -4,7 +4,7 @@ require('dotenv').load();
 var config = {
     env:  'prod',
 
-    host: '0.0.0.0',
+    host: 'localhost',
     port: process.env.PORT || 5000,
 
     // Available themes:
@@ -23,11 +23,12 @@ var config = {
             region: 'eu-west-1'
         },
         jenkins: {
-            baseUrl: 'https://my-jenkins.com',
-            auth: {
-                user:     'me',
-                password: 'me'
-            }
+            baseUrl:           process.env.JENKINS_API_BASE_URL,
+            basicAuthUser:     process.env.JENKINS_API_BASIC_AUTH_USER,
+            basicAuthPassword: process.env.JENKINS_API_BASIC_AUTH_PASSWORD
+        },
+        weather: {
+          apiToken: process.env.WEATHER_API_TOKEN || 'xxxxxxx'
         }
     },
 
@@ -39,35 +40,84 @@ var config = {
 
     dashboards: [
 
-        // first dashboard
         {
+            // 4 x 2 dashboard
+            columns: 4,
+            rows:    2,
+            widgets: [
+              {
+                type: 'jenkins.jobs',
+                columns: 1, rows: 1,
+                x: 0, y: 0
+              },
+              {
+                type: 'jenkins.job_status',
+                job: 'mozaik-dashboard',
+                columns: 1, rows: 1,
+                x: 1, y: 0
+              },
+              {
+                type: 'jenkins.job_status',
+                job: 'mozaik-dashboard',
+                layout: 'bold',
+                columns: 1, rows: 1,
+                x: 2, y: 0
+              },
+              {
+                type: 'jenkins.job_builds_histogram',
+                job: 'mozaik-dashboard',
+                columns: 1, rows: 1,
+                x: 3, y: 0
+              },
+              {
+                type: 'jenkins.view',
+                view: 'all',
+                columns: 2, rows: 1,
+                x: 0, y: 1
+              },
+              {
+                type: 'jenkins.job_builds',
+                job: 'mozaik-dashboard',
+                columns: 1, rows: 1,
+                x: 2, y: 1
+              },
+              {
+                type: 'github.user_badge',
+                user: 'Dzvony',
+                columns: 1, rows: 1,
+                x: 3, y: 1
+              }
+            ]
+        }
+        // first dashboard
+/*        {
             // 4 x 3 dashboard
             columns: 4,
             rows:    3,
             widgets: [
                 {
                     type: 'github.user_badge',
-                    user: 'plouc',
+                    user: 'Dzvony',
                     columns: 1, rows: 1,
                     x: 0, y: 0
                 },
                 {
                     type: 'github.repository_contributors_stats',
-                    repository: 'plouc/mozaik',
+                    repository: 'Accenture/alexia-starter-kit',
                     columns: 1, rows: 1,
                     x: 2, y: 0
                 },
                 {
                     type: 'travis.repository',
-                    owner: 'plouc',
-                    repository: 'mozaik',
+                    owner: 'Accenture',
+                    repository: 'alexia-starter-kit',
                     columns: 1, rows: 1,
                     x: 1, y: 0
                 },
                 {
                     type: 'travis.build_histogram',
-                    owner: 'plouc',
-                    repository: 'mozaik',
+                    owner: 'Accenture',
+                    repository: 'alexia-starter-kit',
                     columns: 2, rows: 1,
                     x: 1, y: 1
                 },
@@ -87,15 +137,15 @@ var config = {
                 },
                 {
                     type: 'travis.build_history',
-                    owner: 'plouc',
-                    repository: 'mozaik',
+                    owner: 'Accenture',
+                    repository: 'alexia-starter-kit',
                     columns: 1, rows: 2,
                     x: 3, y: 1
                 },
                 {
                     type: 'travis.build_histogram',
-                    owner: 'plouc',
-                    repository: 'go-gitlab-client',
+                    owner: 'Accenture',
+                    repository: 'alexia-starter-kit',
                     columns: 2, rows: 1,
                     x: 1, y: 2
                 },
@@ -105,7 +155,7 @@ var config = {
                     x: 0, y: 2
                 }
             ]
-        },
+}
 
         // second dashboard
         {
@@ -141,7 +191,7 @@ var config = {
                     x: 1, y: 1
                 }
             ]
-        }
+        }*/
     ]
 };
 
