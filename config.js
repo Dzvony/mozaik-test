@@ -1,11 +1,12 @@
 // Load environment variables from .env file if available
 require('dotenv').load();
+const jenkinsJob = process.env.JENKINS_JOB;
 
 var config = {
     env:  'prod',
 
-    host: 'localhost',
-    port: process.env.PORT || 5000,
+    host: process.env.MOZAIC_DASHBOARD_HOST || 'localhost',
+    port: process.env.MOZIC_DASHBOARD_PORT || 5000,
 
     // Available themes:
     // + bordeau
@@ -26,9 +27,6 @@ var config = {
             baseUrl:           process.env.JENKINS_API_BASE_URL,
             basicAuthUser:     process.env.JENKINS_API_BASIC_AUTH_USER,
             basicAuthPassword: process.env.JENKINS_API_BASIC_AUTH_PASSWORD
-        },
-        weather: {
-          apiToken: process.env.WEATHER_API_TOKEN || 'xxxxxxx'
         }
     },
 
@@ -52,20 +50,20 @@ var config = {
               },
               {
                 type: 'jenkins.job_status',
-                job: 'mozaik-dashboard',
+                job: jenkinsJob,
                 columns: 1, rows: 1,
                 x: 1, y: 0
               },
               {
                 type: 'jenkins.job_status',
-                job: 'mozaik-dashboard',
+                job: jenkinsJob,
                 layout: 'bold',
                 columns: 1, rows: 1,
                 x: 2, y: 0
               },
               {
                 type: 'jenkins.job_builds_histogram',
-                job: 'mozaik-dashboard',
+                job: jenkinsJob,
                 columns: 1, rows: 1,
                 x: 3, y: 0
               },
@@ -77,7 +75,7 @@ var config = {
               },
               {
                 type: 'jenkins.job_builds',
-                job: 'mozaik-dashboard',
+                job: jenkinsJob,
                 columns: 1, rows: 1,
                 x: 2, y: 1
               },
